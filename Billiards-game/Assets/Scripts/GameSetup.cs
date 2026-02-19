@@ -5,7 +5,7 @@ public class GameSetup : MonoBehaviour
     int redBallsRemanining = 7;
     int blueBallsRemanining = 7;
     float ballRadius;
-    float ballDiamater;
+    float ballDiameter;
 
     [SerializeField] GameObject ballPrefab;
     [SerializeField] Transform cueBallPosition;
@@ -25,13 +25,13 @@ public class GameSetup : MonoBehaviour
         PlaceRandomBalls();
     }
 
-    void PlaceCueBall(Vector3 position)
+    void PlaceCueBall()
     {
         GameObject ball = Instantiate(ballPrefab, cueBallPosition.position, Quaternion.identity);
         ball.GetComponent<Ball>().MakeCueBall();
     }
 
-    void PlaceEightBall()
+    void PlaceEightBall(Vector3 position)
     {
         GameObject ball = Instantiate(ballPrefab, cueBallPosition.position, Quaternion.identity);
         ball.GetComponent<Ball>().MakeEightBall();
@@ -59,7 +59,7 @@ public class GameSetup : MonoBehaviour
             blueBallsRemanining--;
         }
 
-
+        //Outter loop are the 5 rows
         for (int row = 0; row < 5; row++)
         {
             //Switches row (the 5 rows)
@@ -71,10 +71,10 @@ public class GameSetup : MonoBehaviour
                 {
                     PlaceEightBall(currentPosition);
                 } 
-                //If there are red and blue balls still will randomly place them
+                //If there are red and blue balls still, chose one and randomly place them
                 else if ((redBallsRemanining > 0) && (blueBallsRemanining > 0))
                 {
-                    rand = PlaceRandomBalls.Range(0,2);
+                    rand = Random.Range(0,2);
                     if (rand == 0)
                     {
                        PlaceRedBall(currentPosition); 
@@ -96,11 +96,11 @@ public class GameSetup : MonoBehaviour
                 }
 
                 //Move current position of ball to the right
-                currentPosition += new Vector3(1, 0, 0).normalized + ballDiamater;
+                currentPosition += new Vector3(1, 0, 0).normalized * ballDiameter;
             }
 
             //Once all balls in row are placed move to the next row
-            firstInRowPosition += new Vector3(-1, 0, -1).normalized + ballDiamater;
+            firstInRowPosition += new Vector3(-1, 0, -1).normalized * ballDiameter;
             currentPosition = firstInRowPosition;
             NumInThisRow++;
         }

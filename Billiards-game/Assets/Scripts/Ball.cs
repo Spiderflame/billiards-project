@@ -38,7 +38,7 @@ public class Ball : MonoBehaviour
         isRed = red;
         if (isRed)
         {
-            GetComponenet<Renderer>().color = Color.red;
+            GetComponent<Renderer>().material.color = Color.red;
         }
     }
 
@@ -50,6 +50,6 @@ public class Ball : MonoBehaviour
     public void MakeEightBall()
     {
         isEightBall = true;
-        GetComponenet<Renderer>().color = Color.black;
+        GetComponent<Renderer>().material.color = Color.black;
     }
 }

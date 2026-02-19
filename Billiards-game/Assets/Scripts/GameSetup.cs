@@ -16,7 +16,7 @@ public class GameSetup : MonoBehaviour
     {
         ballRadius = ballPrefab.GetComponent<SphereCollider>().radius * 1f;
         ballDiameter = ballRadius * 2f;
-        Debug.Break();
+        //Debug.Break();
         PlaceAllBalls();
     }
 

@@ -16,6 +16,7 @@ public class GameSetup : MonoBehaviour
     {
         ballRadius = ballPrefab.GetComponent<SphereCollider>().radius * 1f;
         ballDiameter = ballRadius * 2f;
+        Debug.Break();
         PlaceAllBalls();
     }
 
@@ -33,7 +34,7 @@ public class GameSetup : MonoBehaviour
 
     void PlaceEightBall(Vector3 position)
     {
-        GameObject ball = Instantiate(ballPrefab, cueBallPosition.position, Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, position, Quaternion.identity);
         ball.GetComponent<Ball>().MakeEightBall();
     }
 
@@ -100,7 +101,7 @@ public class GameSetup : MonoBehaviour
             }
 
             //Once all balls in row are placed move to the next row
-            firstInRowPosition += new Vector3(-1, 0, -1).normalized * ballDiameter;
+            firstInRowPosition += Vector3.back * (Mathf.Sqrt(3) * ballRadius) + Vector3.left * ballRadius;
             currentPosition = firstInRowPosition;
             NumInThisRow++;
         }

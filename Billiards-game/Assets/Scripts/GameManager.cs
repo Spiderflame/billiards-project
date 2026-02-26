@@ -15,14 +15,14 @@ public class GameManager : MonoBehaviour
     int player1BallsRemaining = 7;
     int player2BallsRemaining = 7;
 
-    [SerializedField] TextMeshProlGUI player1BallText;
-    [SerializedField] TextMeshProlGUI player2BallText;
-    [SerializedField] TextMeshProlGUI currentTurnText;
-    [SerializedField] TextMeshProlGUI messageText;
+    [SerializeField] TextMeshProlGUI player1BallText;
+    [SerializeField] TextMeshProlGUI player2BallText;
+    [SerializeField] TextMeshProlGUI currentTurnText;
+    [SerializeField] TextMeshProlGUI messageText;
     
-    [SerializedField] GameObject restartButton;
+    [SerializeField] GameObject restartButton;
 
-    [SerializedField] Transform headPosition;
+    [SerializeField] Transform headPosition;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ball")
         {

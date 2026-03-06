@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class GameManager : MonoBehaviour
     int player1BallsRemaining = 7;
     int player2BallsRemaining = 7;
 
-    [SerializeField] TextMeshProlGUI player1BallText;
-    [SerializeField] TextMeshProlGUI player2BallText;
-    [SerializeField] TextMeshProlGUI currentTurnText;
-    [SerializeField] TextMeshProlGUI messageText;
+    [SerializeField] TextMeshProUGUI player1BallText;
+    [SerializeField] TextMeshProUGUI player2BallText;
+    [SerializeField] TextMeshProUGUI currentTurnText;
+    [SerializeField] TextMeshProUGUI messageText;
     
     [SerializeField] GameObject restartButton;
 
@@ -37,18 +38,18 @@ public class GameManager : MonoBehaviour
 
     bool Scratch()
     {
-        if(currentPlayer == currentPlayer.Player1)
+        if (currentPlayer == CurrentPlayer.Player1)
         {
             if (isWinningShotForPlayer1)
             {
-                scratchOnWinningShot("Player 1");
+                ScratchOnWinningShot("Player 1");
                 return true;
             }
         } else
         {
             if (isWinningShotForPlayer2)
             {
-                scratchOnWinningShot("Player 2");
+                ScratchOnWinningShot("Player 2");
                 return true;
             }
         }
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     void EarlyEightBall()
     {
-        if(currentPlayer == currentPlayer.Player1)
+        if(currentPlayer == CurrentPlayer.Player1)
         {
             Lose("Player 1 Hit in the Eight Ball Too Early and has Lost!");
         } else
@@ -72,12 +73,13 @@ public class GameManager : MonoBehaviour
         Lose(player + "Scratched on Their Final Shot and Has Lost");
     }
 
-    void NoMoreBalls()
+   void NoMoreBalls(CurrentPlayer player)
     {
-        if(player1BallsRemaining == CurrentPlayer.Player1)
+        if (player == CurrentPlayer.Player1)
         {
             isWinningShotForPlayer1 = true;
-        } else
+        }
+        else
         {
             isWinningShotForPlayer2 = true;
         }
@@ -152,15 +154,15 @@ public class GameManager : MonoBehaviour
 
     void Lose(string message)
     {
-        messageText.gameObject.SetAction(true);
-        messageText.test = message;
+        messageText.gameObject.SetActive(true);
+        messageText.text = message;
         restartButton.SetActive(true);
     }
 
     void Win(string player)
     {
-        messageText.gameObject.SetAction(true);
-        messageText.test = player + " Has Won!";
+        messageText.gameObject.SetActive(true);
+        messageText.text = player + " Has Won!";
         restartButton.SetActive(true);
     }
 
@@ -182,15 +184,15 @@ public class GameManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
-            if (CheckBall(other.gameObject.GetComponent<CheckBall>()))
+            if (CheckBall(other.gameObject.GetComponent<Ball>()))
             {
                 Destroy(other.gameObject);
             }
             else
             {
-                other.gameObject.transform = headPosition.positrion;
-                other.gameObject.GetComponent<rigidbody>().velocity = vector3.zero;
-                other.gameObject.GetComponent<rigidbody>().angularVelocity = vector3.zero;
+                other.gameObject.transform.position = headPosition.position;
+                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
         }
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartTheGame()
     {
-        currentPlayer.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 
     bool Scratch()
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour
             if (ball.IsBallRed())
             {
                 player1BallsRemaining--;
+                player1BallText.text = "Player 1 Balls Remainning" + player1BallsRemaining;
                 if(player1BallsRemaining <= 0)
                 {
                     isWinningShotForPlayer1 = true;
@@ -143,6 +145,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 player2BallsRemaining--;
+                player2BallText.text = "Player 2 Balls Remainning" + player2BallsRemaining;
                 if(player1BallsRemaining <= 0)
                 {
                     isWinningShotForPlayer2 = true;

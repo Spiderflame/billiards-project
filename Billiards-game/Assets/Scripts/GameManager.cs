@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void RestartTheGame()
+    {
+        currentPlayer.LoadScene(0);
+    }
+
     bool Scratch()
     {
         if (currentPlayer == CurrentPlayer.Player1)

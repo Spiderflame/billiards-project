@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    [SerializeField] float rotationSpeed;
+    [SerializeField] Vector3 offset;
+    [SerializeField] float downAngle;
+    [SerializeField] float power;
+    private float horizontalInput;
+
+    Transform cueBall;
+
+    //private Vector3 currentOffset;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        foreach(GameObject ball in GameObject.FindGameObjectsWithTag("Ball"))
+        {
+            if (ball.GetComponent<Ball>().IsCueBall())
+            {
+                cueBall = ball.transform;
+                break;
+            }
+
+               
+        }
+
+        Debug.Log(cueBall);
+        //currentOffset = offset;
+        ResetCamera();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(cueBall != null)
+        {
+            //Moving mouse left-right moves the camera in that direction over degrees per seconds
+            horizontalInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+
+            //moves around cueball, Moves on Y axis(0,1,0), what determines how much it moves
+            transform.RotateAround(cueBall.position, Vector3.up, horizontalInput);
+        }
+
+        //Temp
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ResetCamera();
+        }
+        //End Temp
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Vector3 hitDirection = transform.forward;
+            hitDirection = new Vector3(hitDirection.x, 0, hitDirection.z).normalized;
+
+            cueBall.gameObject.GetComponent<Rigidbody>().AddForce(hitDirection * power, ForceMode.Impulse);
+        }
+    }
+
+    public void ResetCamera()
+    {
+        transform.position = cueBall.position + offset;
+        transform.LookAt(cueBall.position);
+        transform.localEulerAngles = new Vector3(downAngle, transform.localEulerAngles.y, 0);
+    }
+}

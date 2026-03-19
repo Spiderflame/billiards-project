@@ -2,21 +2,33 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    private bool isRed;
+    private bool isEightBall = false;
+    private bool isCueBall = false;
+
+    Rigidbody rB;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rB = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }    
+    
+    private void fixedUpdat()
+    {
+        if (rB.linearVelocity.y > 0)
+        {
+            Vector3 newVelocity = rB.linearVelocity;
+            newVelocity.y = 0f;
+            rB.linearVelocity = newVelocity;
+        }
     }
-
-    private bool isRed;
-    private bool isEightBall = false;
-    private bool isCueBall = false;    
 
     public bool IsBallRed()
     {
@@ -39,6 +51,9 @@ public class Ball : MonoBehaviour
         if (isRed)
         {
             GetComponent<Renderer>().material.color = Color.red;
+        } else if (!isCueBall || !isEightBall)
+        {
+            GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 

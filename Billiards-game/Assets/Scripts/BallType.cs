@@ -1,10 +1,17 @@
 using UnityEngine;
 
+public abstract class BallType : ScriptableObject
+{
+    public abstract void OnHit(GameObject ball, Vector3 force);
+}
+
+/*
 public class BallType
 {
-    /*
-    This Script will be used to assign different types to balls.
-    */
+    
+    
+    //This Script will be used to assign different types to balls.
+    
     string type;
     //TODO: variable that is used for mass and friction?
 
@@ -26,3 +33,4 @@ public class BallType
         return true;
     }
 }
+*/

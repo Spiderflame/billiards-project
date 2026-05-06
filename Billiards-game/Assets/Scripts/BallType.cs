@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class BallType : ScriptableObject
 {
-    public abstract void OnHit(GameObject ball, Vector3 force);
+    public abstract void OnHit(GameObject self, GameObject otherBall, Vector3 hitForce);
 }
 
 /*

@@ -60,8 +60,12 @@ public class Ball : MonoBehaviour
 
     Debug.Log("Hit detected: " + name + " -> " + otherBall.name);
 
-    // THIS ball decides behavior, not the other one
-    HandleBallTypeEffect(otherBall, collision);
+    Vector3 force = collision.relativeVelocity;
+
+    if (ballType != null)
+    {
+        ballType.OnHit(gameObject, otherBall.gameObject, force);
+    }
     }
 
     private void HandleBallTypeEffect(Ball otherBall, Collision collision)

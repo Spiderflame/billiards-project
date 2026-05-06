@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
 
     Transform cueBall;
     GameManager gameManager;
-    BallTypeManager ballTypeManager;
     private bool isTakingShot;
     [SerializeField] float maxDrawDistance;
     private float savedMousePosition;
@@ -27,7 +26,6 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        ballTypeManager = FindObjectOfType<BallTypeManager>();
 
         foreach(GameObject ball in GameObject.FindGameObjectsWithTag("Ball"))
         {
@@ -118,7 +116,6 @@ public class CameraController : MonoBehaviour
                     //TODO:Check that this correctly applies force
                     Vector3 finalForce = hitDirection * power * Mathf.Abs(savedMousePosition);
                     cueBall.gameObject.GetComponent<Rigidbody>().AddForce(finalForce, ForceMode.Impulse);
-                    //ballTypeManager.OnBallHit(cueBall.gameObject, finalForce);
 
                     cueStick.SetActive(false);
                     gameManager.SwitchCameras();

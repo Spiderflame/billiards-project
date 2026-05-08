@@ -7,4 +7,8 @@ public class NormalBallType : BallType
     {
         // Does nothing
     }
+    public override void Apply(GameObject self)
+    {
+        // Nothing!
+    }
 }

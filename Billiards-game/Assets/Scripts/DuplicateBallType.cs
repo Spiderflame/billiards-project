@@ -60,4 +60,9 @@ public class DuplicateBallType : BallType
         // Remove original special ball
         Destroy(self);
     }
+
+    public override void Apply(GameObject self)
+    {
+        // Nothing!
+    }
 }

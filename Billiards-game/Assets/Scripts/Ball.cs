@@ -6,9 +6,10 @@ public class Ball : MonoBehaviour
     private bool isEightBall = false;
     private bool isCueBall = false;
 
-    private bool hasDuplicated = false;
-
     public BallType ballType;
+
+    //Index stores in tha ball what type it is
+    public int index;
 
     private Rigidbody rB;
 
@@ -19,7 +20,6 @@ public class Ball : MonoBehaviour
 
     void FixedUpdate()
     {
-        // FIX: Unity uses velocity, not linearVelocity
         if (rB.linearVelocity.y > 0)
         {
             Vector3 newVelocity = rB.linearVelocity;
@@ -38,7 +38,20 @@ public class Ball : MonoBehaviour
 
         if (isCueBall || isEightBall) return;
 
-        GetComponent<Renderer>().material.color = isRed ? Color.red : Color.blue;
+        if (isRed)
+        {
+            GetComponent<Renderer>().material.color = Color.red;
+            index = BallSelector.globalRedValue;
+            BallSelector.globalRedValue++;
+            Debug.Log("Global Red Value: " + BallSelector.globalRedValue);
+
+        } else
+        {
+            GetComponent<Renderer>().material.color = Color.blue;
+            index = BallSelector.globalBlueValue;
+            BallSelector.globalBlueValue++;
+            Debug.Log("Global Blue Value: " + BallSelector.globalBlueValue);
+        }
     }
 
     public void MakeCueBall()
@@ -58,12 +71,11 @@ public class Ball : MonoBehaviour
     Ball otherBall = collision.gameObject.GetComponent<Ball>();
     if (otherBall == null) return;
 
-    Debug.Log("Hit detected: " + name + " -> " + otherBall.name);
-
     Vector3 force = collision.relativeVelocity;
 
     if (ballType != null)
     {
+        Debug.Log("Hit detected: " + name + " -> " + otherBall.name);
         ballType.OnHit(gameObject, otherBall.gameObject, force);
     }
     }

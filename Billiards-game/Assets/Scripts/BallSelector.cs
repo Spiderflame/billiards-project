@@ -96,9 +96,9 @@ public class BallSelector : MonoBehaviour
 
     public void Randomize()
     {   
-        for (int i = 0; i < ballTypeList.Length; i++)
+        for (int i = 1; i < ballTypeList.Length; i++)
         {
-            ballTypeList[i] = Random.Range(0, ballSprites.Length);;
+            ballTypeList[i] = Random.Range(0, ballSprites.Length);
         }
 
         UpdateBallSelected();

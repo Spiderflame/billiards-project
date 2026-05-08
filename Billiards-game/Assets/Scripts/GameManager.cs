@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,7 +28,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI player1BallText;
     [SerializeField] TextMeshProUGUI player2BallText;
-    [SerializeField] TextMeshProUGUI currentTurnText;
+    //Old Current turn text
+    //[SerializeField] TextMeshProUGUI currentTurnText;
+    //New Current turn image
+    [SerializeField] Image turnImage;
+    //Player turn sprites
+    [SerializeField] Sprite[] turnSprites;
+
     [SerializeField] TextMeshProUGUI messageText;
     
     [SerializeField] GameObject restartButton;
@@ -44,6 +51,7 @@ public class GameManager : MonoBehaviour
         currentPlayer = CurrentPlayer.Player1;
         currentCamera = cueStickCamera;
         currentTimer = shotTimer;
+        UpdateScoreText();
     }
 
     // Update is called once per frame
@@ -145,20 +153,6 @@ public class GameManager : MonoBehaviour
         Lose(player + "Scratched on Their Final Shot and Has Lost");
     }
 
-   /*Never used
-   void NoMoreBalls(CurrentPlayer player)
-    {
-        if (player == CurrentPlayer.Player1)
-        {
-            isWinningShotForPlayer1 = true;
-        }
-        else
-        {
-            isWinningShotForPlayer2 = true;
-        }
-    }
-    */
-
     bool CheckBall(Ball ball)
     {
         if (ball.IsCueBall())
@@ -199,7 +193,7 @@ public class GameManager : MonoBehaviour
             if (ball.IsBallRed())
             {
                 player1BallsRemaining--;
-                player1BallText.text = "Player 1 Balls Remainning" + player1BallsRemaining;
+                UpdateScoreText();
                 if(player1BallsRemaining <= 0)
                 {
                     isWinningShotForPlayer1 = true;
@@ -215,7 +209,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 player2BallsRemaining--;
-                player2BallText.text = "Player 2 Balls Remaining: " + player2BallsRemaining;
+                UpdateScoreText();
                 if(player2BallsRemaining <= 0)
                 {
                     isWinningShotForPlayer2 = true;
@@ -253,12 +247,14 @@ public class GameManager : MonoBehaviour
         if (currentPlayer == CurrentPlayer.Player1)
         {
             currentPlayer = CurrentPlayer.Player2;
-            currentTurnText.text = "Current Turn: Player 2";
+            //currentTurnText.text = "Current Turn: Player 2";
+            turnImage.sprite = turnSprites[1];
         }
         else
         {
             currentPlayer = CurrentPlayer.Player1;
-            currentTurnText.text = "Current Turn: Player 1";
+            //currentTurnText.text = "Current Turn: Player 1";
+            turnImage.sprite = turnSprites[0];
         }
         willSwapPlayers = false;
         SwitchCameras();
@@ -280,5 +276,24 @@ public class GameManager : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
         }
+    }
+
+    private void UpdateScoreText()
+    {
+        player1BallText.text = "Player 1 Balls Remaining: " + player1BallsRemaining;
+        player2BallText.text = "Player 2 Balls Remaining: " + player2BallsRemaining;
+    }
+
+    public void IncrementScoreValue(Ball ball)
+    {
+        if (ball.IsBallRed())
+        {
+            player1BallsRemaining++;
+        } else
+        {
+            player2BallsRemaining++;
+        }
+
+        UpdateScoreText();
     }
 }

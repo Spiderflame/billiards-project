@@ -57,6 +57,10 @@ public class DuplicateBallType : BallType
         rb1.linearVelocity = leftDir * incomingSpeed * splitForce;
         rb2.linearVelocity = rightDir * incomingSpeed * splitForce;
 
+        Ball ballComponent = self.GetComponent<Ball>();
+        GameManager gamMana = FindFirstObjectByType<GameManager>();
+        gamMana.IncrementScoreValue(ballComponent);
+
         // Remove original special ball
         Destroy(self);
     }

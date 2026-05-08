@@ -84,6 +84,7 @@ public class Ball : MonoBehaviour
     {
         BallSelector selector = FindFirstObjectByType<BallSelector>();
         
+        Debug.Log("UpdateBall's Index: " + index);
         //0- normal, 1- Duplicate, 2- Bouncy
         int currentType = selector.GetBallType(index);
 

@@ -55,25 +55,10 @@ public class CameraController : MonoBehaviour
             transform.RotateAround(cueBall.position, Vector3.up, horizontalInput);
         }
 
-        /*//Temp
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!PauseMenu.isPaused)
         {
-            ResetCamera();
+            Shoot();
         }
-        //End Temp*/
-
-        /*Moved Down to shoot function
-        if (Input.GetButtonDown("Fire1") && gameObject.GetComponent<Camera>().enabled)
-        {
-            Vector3 hitDirection = transform.forward;
-            hitDirection = new Vector3(hitDirection.x, 0, hitDirection.z).normalized;
-
-            cueBall.gameObject.GetComponent<Rigidbody>().AddForce(hitDirection * power, ForceMode.Impulse);
-            cueStick.SetActive(false);
-            gameManager.SwitchCameras();
-        }
-        */
-        Shoot();
     }
 
     public void ResetCamera()

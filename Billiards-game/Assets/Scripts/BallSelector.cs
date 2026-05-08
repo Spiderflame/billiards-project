@@ -12,11 +12,9 @@ public class BallSelector : MonoBehaviour
     [SerializeField] Image ballImage;
 
     //List that contains pictures for each ball type
+    //0- normal, 1- Duplicate, 2- Bouncy
     [SerializeField] Sprite[] ballSprites;
     
-    //List containing every ball type (might not be needed)
-
-
     //List containg every ball's type
     //0- normal, 1- Duplicate, 2- Bouncy
     //Player 1: Ball 1-7 <-> Index 1-7.Player 2: Ball 9-15 <-> Index 8-14
@@ -39,7 +37,7 @@ public class BallSelector : MonoBehaviour
             ballTypeList[i] = 0;
         }
 
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
     public void UpBallArrow()
@@ -54,7 +52,7 @@ public class BallSelector : MonoBehaviour
         {
             shownIndex = 9;
         }
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
     public void DownBallArrow()
@@ -69,7 +67,7 @@ public class BallSelector : MonoBehaviour
         {
             shownIndex = 7;
         }
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
     public void UpTypeArrow()
@@ -81,7 +79,7 @@ public class BallSelector : MonoBehaviour
             ballTypeList[realIndex] = 0;
         }
 
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
     public void DownTypeArrow()
@@ -93,7 +91,7 @@ public class BallSelector : MonoBehaviour
             ballTypeList[realIndex] = (ballSprites.Length - 1);
         }
 
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
     public void Randomize()
@@ -103,10 +101,10 @@ public class BallSelector : MonoBehaviour
             ballTypeList[i] = Random.Range(0, ballSprites.Length);;
         }
 
-        updateBallSelected();
+        UpdateBallSelected();
     }
 
-    void updateBallSelected()
+    void UpdateBallSelected()
     {
         ballSelectedText.text = shownIndex.ToString();
 
@@ -120,5 +118,17 @@ public class BallSelector : MonoBehaviour
         {
             Debug.LogError("Invalid ball type: " + type);
         }
+
+        Ball[] balls = FindObjectsByType<Ball>(FindObjectsSortMode.None);
+
+        foreach (Ball ball in balls)
+        {
+            ball.UpdateBall();
+        }
+    }
+
+    public int GetBallType(int index)
+    {
+        return ballTypeList[index];
     }
 }

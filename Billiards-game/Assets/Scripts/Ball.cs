@@ -79,4 +79,31 @@ public class Ball : MonoBehaviour
         ballType.OnHit(gameObject, otherBall.gameObject, force);
     }
     }
+
+    public void UpdateBall()
+    {
+        BallSelector selector = FindFirstObjectByType<BallSelector>();
+        
+        //0- normal, 1- Duplicate, 2- Bouncy
+        int currentType = selector.GetBallType(index);
+
+        switch (currentType)
+        {
+            case 0:
+                ballType = ScriptableObject.CreateInstance<NormalBallType>();
+                break;
+
+            case 1:
+                ballType = ScriptableObject.CreateInstance<DuplicateBallType>();
+                break;
+
+            case 2:
+                ballType = ScriptableObject.CreateInstance<BouncyBallType>();
+                break;
+
+            default:
+                Debug.Log("Ball is not updating");
+                break;
+        }
+    }
 }

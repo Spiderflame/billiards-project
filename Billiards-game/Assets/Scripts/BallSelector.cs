@@ -72,11 +72,44 @@ public class BallSelector : MonoBehaviour
         updateBallSelected();
     }
 
+    public void UpTypeArrow()
+    {
+        ballTypeList[realIndex]++;
+
+        if(ballTypeList[realIndex] > (ballSprites.Length - 1))
+        {
+            ballTypeList[realIndex] = 0;
+        }
+
+        updateBallSelected();
+    }
+
+    public void DownTypeArrow()
+    {
+        ballTypeList[realIndex]--;
+
+        if(ballTypeList[realIndex] < 0)
+        {
+            ballTypeList[realIndex] = (ballSprites.Length - 1);
+        }
+
+        updateBallSelected();
+    }
+
+    public void Randomize()
+    {   
+        for (int i = 0; i < ballTypeList.Length; i++)
+        {
+            ballTypeList[i] = Random.Range(0, ballSprites.Length);;
+        }
+
+        updateBallSelected();
+    }
+
     void updateBallSelected()
     {
         ballSelectedText.text = shownIndex.ToString();
 
-        //ballImage.sprite = ballSprites[(ballTypeList[realIndex])];
         int type = ballTypeList[realIndex];
 
         if (type >= 0 && type < ballSprites.Length)

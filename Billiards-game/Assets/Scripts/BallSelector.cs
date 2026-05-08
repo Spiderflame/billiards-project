@@ -27,11 +27,14 @@ public class BallSelector : MonoBehaviour
     public int realIndex = 1;
 
     //These global values update whenever a new ball is red or blue ball is made in start up
-    public static int globalRedValue = 1;
-    public static int globalBlueValue = 8;
+    public static int globalRedValue;
+    public static int globalBlueValue;
 
     void Start()
     {
+        globalRedValue = 1;
+        globalBlueValue = 8;
+
         for (int i = 0; i < ballTypeList.Length; i++)
         {
             ballTypeList[i] = 0;
